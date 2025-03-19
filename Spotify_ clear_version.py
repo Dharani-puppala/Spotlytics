@@ -1,58 +1,58 @@
 import requests
 import pandas as pd
 
-#Function to get Spotify access token
-def get_spotify_token(client_id, client_secret):
-auth_url = 'https://accounts.spotify.com/api/token'
-auth_response = requests.post(auth_url, {
-'grant_type': 'client_credentials',
-'client_id': client_id,
-'client_secret': client_secret,
-})
-auth_data = auth_response.json()
-return auth_data['access_token']
+# Function to get Spotify access token
+def fetch_spotify_token(api_key, api_secret):
+    auth_url = 'https://accounts.spotify.com/api/token'
+    auth_response = requests.post(auth_url, data={
+        'grant_type': 'client_credentials',
+        'client_id': api_key,
+        'client_secret': api_secret,
+    })
+    auth_data = auth_response.json()
+    return auth_data['access_token']
 
-#Function to search for a track and get its ID
-def search_track(track_name, artist_name, token):
-query = f"{track_name} artist:{artist_name}"
-url = f"https://api.spotify.com/v1/search?q={query}&type=track"
-response = requests.get(url, headers={
-'Authorization': f'Bearer {token}'
-})
-json_data = response.json()
-try:
-first_result = json_data['tracks']['items'][0]
-track_id = first_result['id']
-return track_id
-except (KeyError, IndexError):
-return None
+# Function to search for a track and get its ID
+def find_track_id(track_title, artist_name, token):
+    search_query = f"{track_title} artist:{artist_name}"
+    search_url = f"https://api.spotify.com/v1/search?q={search_query}&type=track"
+    search_response = requests.get(search_url, headers={
+        'Authorization': f'Bearer {token}'
+    })
+    response_data = search_response.json()
+    try:
+        top_result = response_data['tracks']['items'][0]
+        track_identifier = top_result['id']
+        return track_identifier
+    except (KeyError, IndexError):
+        return None
 
-#Function to get track details
-def get_track_details(track_id, token):
-url = f"https://api.spotify.com/v1/tracks/{track_id}"
-response = requests.get(url, headers={
-'Authorization': f'Bearer {token}'
-})
-json_data = response.json()
-image_url = json_data['album']['images'][0]['url']
-return image_url
+# Function to get track details
+def fetch_track_details(track_identifier, token):
+    track_url = f"https://api.spotify.com/v1/tracks/{track_identifier}"
+    track_response = requests.get(track_url, headers={
+        'Authorization': f'Bearer {token}'
+    })
+    track_data = track_response.json()
+    cover_image_url = track_data['album']['images'][0]['url']
+    return cover_image_url
 
 # Spotify API Credentials
-client_id = 'your_client_id'
-client_secret = 'your_client_secret'
+api_key = 'client_id'  
+api_secret = 'client_secret'  
 
-#Get Access Token
-access_token = get_spotify_token(client_id, client_secret)
+# Get Access Token
+access_token = fetch_spotify_token(api_key, api_secret)
 
-#Read your DataFrame (replace 'your_file.csv' with the path to your CSV file)
-df_spotify = pd.read_csv('your_file.csv', encoding='ISO-8859-1')
+# Read your DataFrame (replace 'your_file.csv' with the path to your CSV file)
+spotify_data = pd.read_csv('your_file.csv', encoding='ISO-8859-1')
 
-#Loop through each row to get track details and add to DataFrame
-for i, row in df_spotify.iterrows():
-track_id = search_track(row['track_name'], row['artist_name'], access_token)
-if track_id:
-image_url = get_track_details(track_id, access_token)
-df_spotify.at[i, 'image_url'] = image_url
+# Loop through each row to get track details and add to DataFrame
+for idx, track_info in spotify_data.iterrows():
+    track_identifier = find_track_id(track_info['track_name'], track_info['artist_name'], access_token)
+    if track_identifier:
+        cover_image_url = fetch_track_details(track_identifier, access_token)
+        spotify_data.at[idx, 'cover_image_url'] = cover_image_url
 
-Save the updated DataFrame (replace 'updated_file.csv' with your desired output file name)
-df_spotify.to_csv('updated_file.csv', index=False)
+# Save the updated DataFrame (replace 'updated_file.csv' with your desired output file name)
+spotify_data.to_csv('updated_file.csv', index=False)
