@@ -7,7 +7,7 @@ CLIENT, SECRET = 'client _secret'
 # Fetch an access token from Spotify
 auth_response = requests.post(
             'https://accounts.spotify.com/api/token',
-             * data={'grant_type'; 'client cxedentiale', 'client_id'; CLIENT_ID, 'clie
+             data={'grant_type'; 'client cxedentiale', 'client_id'; CLIENT_ID, 'client_secret': client_secret,}
 )
 auth,data = auth_response.json()
 access_token = auth_data['access_token']
@@ -16,7 +16,7 @@ access_token = auth_data['access_token']
 headers = {'Authorization': f'Bearer {access_token}'}
 
 # Load your existing CSV file into a DataFrame
-* df = pd.read_csv('D:/xprojects/power bi/VizGpt/spotify-2023.csv')
+df = pd.read_csv('D:/xprojects/power bi/VizGpt/spotify-2023.csv')
 
 # Create an empty list to store cover URLS
 cover urls = []
@@ -26,11 +26,11 @@ for _, row in df.iterrows():
   track_name = row['track_name ']
   artist _name = row['artist(s) _name']
   query = f"track:{track_name} artist:{artist_name}"
- * search response = requests.get(f"https://api.spotify.com/v1/search?q=(qu
+  search response = requests.get(f"https://api.spotify.com/v1/search?q={query}&type=track"
   search_data = search_response.json()
 
 try:
-  *cover url = search_data['tracks']['items'][O]['album']['images'][0][
+  cover url = search_data['tracks']['items'][O]['album']['images'][0]['url']
 except (KeyError, IndexError):
   cover_url = 'Not Found'
   cover_urls.append(cover_url)
