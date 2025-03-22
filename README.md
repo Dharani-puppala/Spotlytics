@@ -30,7 +30,8 @@ This project demonstrates the integration of Spotify's data into various visuali
 - Integrated Deneb (a Power BI visual) to add advanced charting options like heat maps and unit charts, improving the dashboard's interactivity and analysis capabilities.
 
 ### Step 8: Power BI Finalization
-- Edited and organized the Power BI dashboard to ensure clean and insightful visualizations. The final version was polished for optimal user experience and presentation.
+- Added buttons to refresh the filters, allowing users to quickly update and interact with the data for a more dynamic experience.
+- Edited and organized the Power BI dashboard to ensure clean and insightful visualizations a. The final version was polished for optimal user experience and presentation.
 
 ![Image](https://github.com/user-attachments/assets/b9c77052-445b-4cae-bec6-842e9c1f70af)
 ---
