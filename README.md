@@ -1,4 +1,4 @@
-# VIZ-GPT: Spotify Data Visualization Project
+# Spotlytics: A combination of Spotify and analytics, Visualization Project
 
 This project demonstrates the integration of Spotify's data into various visualization tools, including Power BI, HTML, and Deneb. The project focuses on cleaning and transforming Spotify data, adding album cover images, integrating glassmorphism backgrounds, and displaying advanced visualizations.
 
