@@ -31,6 +31,7 @@ This project demonstrates the integration of Spotify's data into various visuali
 
 ### Step 8: Power BI Finalization
 - Edited and organized the Power BI dashboard to ensure clean and insightful visualizations. The final version was polished for optimal user experience and presentation.
+
 ![Image](https://github.com/user-attachments/assets/b9c77052-445b-4cae-bec6-842e9c1f70af)
 ---
 
